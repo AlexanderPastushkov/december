@@ -16,19 +16,41 @@ async function main() {
 
   function displayList(arrData, rowPerPage, page) {
     const postsEl = document.querySelector(".posts");
-    postsEl.innerHTML = "";
+    postsEl.innerHTML = `<table class="arrItems"></table>`;
     page--;
     const start = rowPerPage * page;
     const end = start + rowPerPage;
-    // Делим массив
+
     const paginatedData = arrData.slice(start, end);
-    paginatedData.forEach((el) => {
-      const postEl = document.createElement("div");
-      postEl.classList.add("post");
-      postEl.innerHTML = `${el.subject}`;
-      postsEl.appendChild(postEl);
-    });
+    for (var i = 0; i < paginatedData.length; i++) {
+      for (key in paginatedData[i]) {
+        console.log(key);
+        const postEl = document.createElement("tr");
+
+        postEl.classList.add("post");
+        postEl.innerHTML = `<td><strong>${key}</strong>:${paginatedData[i][key]}</td>`;
+        document.querySelector(".arrItems").appendChild(postEl);
+      }
+    }
   }
+
+  //   function displayList(arrData, rowPerPage, page) {
+  //     const postsEl = document.querySelector(".posts");
+  //     postsEl.innerHTML = `<table class="arrItems"></table>`;
+  //     page--;
+  //     const start = rowPerPage * page;
+  //     const end = start + rowPerPage;
+
+  //     const paginatedData = arrData.slice(start, end);
+  //     paginatedData.forEach((item) => {
+  //       const postEl = document.createElement("tr");
+
+  //       postEl.classList.add("post");
+  //       postEl.innerHTML = `<td>${item}</td>`;
+  //       document.querySelector(".arrItems").appendChild(postEl);
+
+  //     });
+  //   }
   function displayPagination(arrData, rowPerPage) {
     const paginationEl = document.querySelector(".pagination");
     const pagesCount = Math.ceil(arrData.length / rowPerPage);
@@ -60,3 +82,29 @@ async function main() {
   displayPagination(postsData, rows);
 }
 main();
+//========================================================================================================================================================
+// const phoneNumber = {
+//   firedept: [
+//     ["number 1", "101"],
+//     ["number 2", "112"],
+//     ["number 3", "01"],
+//   ],
+//   police: [
+//     ["number 1", "102"],
+//     ["number 2", "02"],
+//   ],
+//   ambulance: [["number 1", "03"]],
+// };
+// document.querySelector(".content").innerHTML = `<table class="phone"></table>`;
+// for (key in phoneNumber) {
+//   let row = document.createElement("tr");
+//   row.innerHTML = `<td colspan="2">${key}</td>`;
+//   document.querySelector(".phone").appendChild(row);
+//   for (let i = 0; i < phoneNumber[key].length; i++) {
+//     let row = document.createElement("tr");
+//     row.innerHTML = `
+//     <td>${phoneNumber[key][i][0]}</td>
+//     <td>${phoneNumber[key][i][1]}</td>`;
+//     document.querySelector(".phone").appendChild(row);
+//   }
+// }

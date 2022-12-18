@@ -32,9 +32,7 @@ main {
   align-items: center;
 }
 .post {
-  padding: 8px;
-  border: 1px;
-  border-color: bisque;
+  padding: 38px;
 }
 .pagination {
   display: flex;
@@ -51,4 +49,15 @@ main {
 .pagination__item-active {
   font-weight: 800;
   color: gold;
+}
+.arrItems {
+  padding: 8px;
+
+  background-color: rgb(251, 218, 218);
+}
+tr {
+  background-color: rgb(243, 223, 223);
+}
+td {
+  border: 1px solid #333;
 }
