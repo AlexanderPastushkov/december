@@ -133,13 +133,21 @@ main {
 
 .arrItems {
   padding: 8px;
-  background-color: rgb(251, 218, 218);
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(187, 199, 240);
 }
 
 tr {
-  background-color: rgb(243, 223, 223);
+  background-color: rgb(187, 199, 240);
 }
 
 td {
   border: 1px solid #333;
+}
+
+.cols {
+  text-align: center;
+  align-items: center;
 }
