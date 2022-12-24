@@ -1,64 +1,31 @@
-// let requestUrl = "https://jsonplaceholder.typicode.com/posts";
-// let requestUrl =
-//   "https://chroniclingamerica.loc.gov/search/titles/results/?terms=michigan&format=json";
-
-// async function getData(page) {
-//   const response = await fetch(`${requestPage}&page=${page}`);
-//   const data = await response.json();
-//   return data.items;
-// }
-
-let requestUrl = "https://jsonplaceholder.typicode.com/posts";
 let requestPage =
   "https://chroniclingamerica.loc.gov/search/titles/results/?terms=michigan&format=json";
-
-async function getData() {
-  const response = await fetch(requestPage);
+async function getData(page) {
+  const response = await fetch(`${requestPage}&page=${page}`);
   const data = await response.json();
   return data.items;
 }
-// async function sendRequest() {
-//   return fetch(requestPage)
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log(data);
-//     });
-// }
-
 async function main() {
-  const postsData = await getData();
-  // let result = postsData.filter((item) => {
-  //   return item.publisher == "Harry H. Francis";
-  // });
-  // console.log(result);
+  let currentPage = 1;
+  const postsData = await getData(currentPage);
   console.log(postsData);
 
-  let currentPage = 1;
   let rows = 10;
-
   function displayList(arrData, rowPerPage, page) {
     const postsEl = document.querySelector(".posts");
     postsEl.innerHTML = `<table class="arrItems"></table>`;
-    page--;
-    const start = rowPerPage * page;
-    const end = start + rowPerPage;
 
-    const paginatedData = arrData.slice(start, end);
-    for (var i = 0; i < paginatedData.length; i++) {
-      console.log(paginatedData[i]);
+    for (var i = 0; i < postsData.length; i++) {
+      console.log(postsData[i]);
 
-      for (key in paginatedData[i]) {
-        if (key == "city" || key == "publisher") {
+      for (key in postsData[i]) {
+        if (key == "city") {
           console.log(key);
           let row = document.createElement("tr");
-
           document.querySelector(".arrItems").appendChild(row);
-
           row.classList.add("post");
           row.innerHTML = `<td ><strong>${key}</strong></td>
-          <td>${paginatedData[i][key]}</td>`;
+          <td>${postsData[i][key]}</td>`;
         }
       }
     }
@@ -85,7 +52,10 @@ async function main() {
     }
     liEl.addEventListener("click", () => {
       currentPage = page;
-
+      const data = getData(page)
+        .then((resp) => console.log(resp))
+        .catch((err) => console.log(err));
+      console.log(data);
       displayList(postsData, rows, currentPage);
       let currentItemLi = document.querySelector("li.pagination__item-active");
       currentItemLi.classList.remove("pagination__item-active");
@@ -97,6 +67,28 @@ async function main() {
   displayPagination(postsData, rows);
 }
 main();
+
+//========================================================================================================================================================
+// function howMuchILoveYou(nbPetals) {
+//   let arr = [
+//     "I love you",
+//     "a little",
+//     "a lot",
+//     "passionately",
+//     "madly",
+//     "not at all",
+//   ];
+//   for (let i = 0; i < arr.length; i++) {
+//     console.log(arr[i].indexOf());
+//   }
+// }
+// howMuchILoveYou();
+//========================================================================================================================================================
+// async function getData() {
+//   const response = await fetch(requestPage);
+//   const data = await response.json();
+//   return data.items;
+// }
 //========================================================================================================================================================
 // const phoneNumber = {
 //   firedept: [
@@ -180,3 +172,15 @@ main();
 //     [65, 30, 34, 74, 2, 4, 90, 5, 4, 6]
 //   )
 // );
+//========================================================================================================================================================
+
+// async function sendRequest() {
+//   return fetch(requestPage)
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .then((data) => {
+//       console.log(data);
+//     });
+// }
+// let requestUrl = "https://jsonplaceholder.typicode.com/posts";
