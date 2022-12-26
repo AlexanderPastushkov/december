@@ -151,3 +151,16 @@ td {
   text-align: center;
   align-items: center;
 }
+
+.posts__list {
+  display: flex;
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.posts__list li {
+  padding: 8px;
+  margin-right: 10px;
+}

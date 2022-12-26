@@ -1,17 +1,16 @@
-let requestUrl = "https://jsonplaceholder.typicode.com/posts";
 let requestPage =
-  "https://chroniclingamerica.loc.gov/search/titles/results/?terms=michigan&format=json";
+  "https://chroniclingamerica.loc.gov/search/titles/results/?terms=michigan&format=json&page=1";
+async function getData() {
+  const response = await fetch(requestPage);
+  const data = await response.json();
+  return data.items;
+}
 
 async function main() {
-  async function getData() {
-    const response = await fetch(`${requestPage}&page=${page}`);
-    const data = await response.json();
-    return data.items;
-  }
   const postsData = await getData();
   console.log(postsData);
   let currentPage = 1;
-  let rows = 10;
+  let rows = 25;
 
   function displayList(arrData, rowPerPage, page) {
     const postsEl = document.querySelector(".posts");
@@ -19,25 +18,25 @@ async function main() {
     page--;
     const start = rowPerPage * page;
     const end = start + rowPerPage;
-
     const paginatedData = arrData.slice(start, end);
-    for (var i = 0; i < paginatedData.length; i++) {
-      console.log(paginatedData[i]);
-      for (key in paginatedData[i]) {
-        console.log(key);
 
-        const postEl = document.createElement("tr");
-
-        postEl.classList.add("post");
-        postEl.innerHTML = `<td><strong>${key}</strong>:${paginatedData[i][key]}</td> `;
-        document.querySelector(".arrItems").appendChild(postEl);
+    paginatedData.forEach(function (item) {
+      console.log(item);
+      for (key in item) {
+        if (key == "city") {
+          console.log(key);
+          let row = document.createElement("tr");
+          document.querySelector(".arrItems").appendChild(row);
+          row.classList.add("post");
+          row.innerHTML = `<td ><strong>${key}</strong></td>
+          <td>${item[key]}</td>`;
+        }
       }
-    }
+    });
   }
 
   function displayPagination(arrData, rowPerPage) {
     const paginationEl = document.querySelector(".pagination");
-    // считаем старницы делим длину массива на коль-во строк на странице
     const pagesCount = Math.ceil(arrData.length / rowPerPage);
     const ulEl = document.createElement("ul");
     ulEl.classList.add("pagination__list");
@@ -56,8 +55,10 @@ async function main() {
     }
     liEl.addEventListener("click", () => {
       currentPage = page;
-      getData(page);
-
+      // const data = getData(page)
+      //   .then(displayList(postsData, rows, page))
+      //   .catch((err) => console.log(err));
+      // console.log(data);
       displayList(postsData, rows, currentPage);
       let currentItemLi = document.querySelector("li.pagination__item-active");
       currentItemLi.classList.remove("pagination__item-active");
@@ -65,8 +66,8 @@ async function main() {
     });
     return liEl;
   }
+
   displayList(postsData, rows, currentPage);
   displayPagination(postsData, rows);
 }
 main();
-//========================================================================================================================================================

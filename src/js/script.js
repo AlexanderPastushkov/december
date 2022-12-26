@@ -9,18 +9,16 @@ async function main() {
   let currentPage = 1;
   const postsData = await getData(currentPage);
   console.log(postsData);
-
   let rows = 10;
   function displayList(arrData, rowPerPage, page) {
     const postsEl = document.querySelector(".posts");
     postsEl.innerHTML = `<table class="arrItems"></table>`;
 
     for (var i = 0; i < postsData.length; i++) {
-      console.log(postsData[i]);
-
+      // console.log(postsData[i]);
       for (key in postsData[i]) {
         if (key == "city") {
-          console.log(key);
+          // console.log(key);
           let row = document.createElement("tr");
           document.querySelector(".arrItems").appendChild(row);
           row.classList.add("post");
@@ -33,7 +31,6 @@ async function main() {
 
   function displayPagination(arrData, rowPerPage) {
     const paginationEl = document.querySelector(".pagination");
-    // считаем старницы делим длину массива на коль-во строк на странице
     const pagesCount = Math.ceil(arrData.length / rowPerPage);
     const ulEl = document.createElement("ul");
     ulEl.classList.add("pagination__list");
@@ -53,10 +50,9 @@ async function main() {
     liEl.addEventListener("click", () => {
       currentPage = page;
       const data = getData(page)
-        .then((resp) => console.log(resp))
+        .then(displayList(postsData, rows, page))
         .catch((err) => console.log(err));
       console.log(data);
-      displayList(postsData, rows, currentPage);
       let currentItemLi = document.querySelector("li.pagination__item-active");
       currentItemLi.classList.remove("pagination__item-active");
       liEl.classList.add("pagination__item-active");
@@ -184,3 +180,10 @@ main();
 //     });
 // }
 // let requestUrl = "https://jsonplaceholder.typicode.com/posts";
+//========================================================================================================================================================
+// function sumTwoSmallestNumbers(numbers) {
+//   let arr = numbers.sort((a, b) => a - b);
+//   console.log(arr);
+//   return arr[0] + arr[1];
+// }
+// sumTwoSmallestNumbers([10, 12, 3, 5, 10, 2, 45]);
